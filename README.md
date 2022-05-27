@@ -1,5 +1,5 @@
 # todo README
-Playing around with VS Code extensions (a WIP!) 
+Playing around with VS Code extensions (a WIP!) to create a todo list feature 
 
 Resources:
  <br /> https://github.com/microsoft/vscode-extension-samples
