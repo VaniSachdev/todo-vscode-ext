@@ -1,14 +1,35 @@
 
 import * as vscode from 'vscode';
 import { HelloWorldPanel } from './HelloWorldPanel';
-
+import { SidebarProvider } from './SidebarProvider';
 
 export function activate(context: vscode.ExtensionContext) {
 
-	console.log('ToDo is active!');
+	const sidebarProvider = new SidebarProvider(context.extensionUri);
+	context.subscriptions.push(
+	  vscode.window.registerWebviewViewProvider(
+		"todo-sidebar",
+		sidebarProvider
+	  )
+	);
+
+
 	context.subscriptions.push(
 		vscode.commands.registerCommand('todo.helloWorld', () => {
 			HelloWorldPanel.createOrShow(context.extensionUri); 
+		})
+	);
+
+
+	context.subscriptions.push(
+		vscode.commands.registerCommand('todo.refresh', () => {
+			HelloWorldPanel.kill();
+			HelloWorldPanel.createOrShow(context.extensionUri);
+
+			setTimeout( () => {
+				vscode.commands.executeCommand("workbench.action.webview.openDeveloperTools");
+			}, 500);
+
 		})
 	);
 
